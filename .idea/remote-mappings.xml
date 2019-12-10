@@ -10,6 +10,13 @@
             </list>
           </settings>
         </remote-mappings>
+        <remote-mappings server-id="php@2fdde7ea-b79c-4016-93eb-01a8b78baefd">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/home/vagrant/code/BChat" />
+            </list>
+          </settings>
+        </remote-mappings>
       </list>
     </list>
   </component>
