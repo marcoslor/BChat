@@ -43,4 +43,24 @@ class MessageSent implements ShouldBroadcast
     {
         return new PrivateChannel('chat.'.$this->message->chat->id);
     }
+
+    /**
+     * Get the data to broadcast.
+     *
+     * @return array
+     */
+    public function broadcastWith()
+    {
+        return [$this->message];
+    }
+
+    /**
+     * The event's broadcast name.
+     *
+     * @return string
+     */
+    public function broadcastAs()
+    {
+        return 'message.sent';
+    }
 }

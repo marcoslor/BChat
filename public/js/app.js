@@ -31236,7 +31236,7 @@ var render = function() {
             _c("strong", { staticClass: "primary-font" }, [
               _vm._v(
                 "\n                    " +
-                  _vm._s(message.user) +
+                  _vm._s(message.user.name) +
                   "\n                "
               )
             ])
@@ -43812,9 +43812,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-Echo["private"]("chat.".concat(window.location.pathname.split("/").pop())).listen('MessageSent', function (e) {
-  console.log('Info ' + e.update);
-});
 
 
 
@@ -43827,20 +43824,26 @@ var app = new Vue({
     messages: []
   },
   created: function created() {
+    var _this = this;
+
     this.fetchMessages();
+    Echo["private"]("chat.".concat(window.location.pathname.split("/").pop())).listen('.message.sent', function () {
+      _this.fetchMessages();
+    });
   },
   methods: {
     fetchMessages: function fetchMessages() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get(window.location.pathname + '/messages').then(function (response) {
-        _this.messages = response.data;
+        _this2.messages = response.data;
       });
     },
     addMessage: function addMessage(message) {
-      this.messages.push(message);
+      var _this3 = this;
+
       axios.post(window.location.pathname + '/messages', message).then(function (response) {
-        console.log(response.data);
+        _this3.fetchMessages();
       });
     },
     createChat: function createChat() {}

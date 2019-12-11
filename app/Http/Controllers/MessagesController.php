@@ -10,27 +10,36 @@ use Illuminate\Support\Facades\Auth;
 
 class MessagesController extends Controller
 {
-    protected function validateRequest()
+    protected $rules = [
+        'body' => 'required',
+    ];
+
+    protected function validateRequest($key)
     {
-        return request()->validate([
-            'body' => 'required',
-        ]);
+        if ($key)
+        {
+            return request()->validate($this->rules)[$key];
+        }
+        return request()->validate($this->rules);
     }
 
     public function store(Chat $chat)
     {
         $user = Auth::user();
 
-        if($chat->users->contains($user))
+        if ($chat->users->contains($user))
         {
-            $message = Message::create(array_merge($this->validateRequest(), ['user_id'=> $user->id, 'chat_id'=>$chat->id]));
-            event( new MessageSent($message) );
-
+            $chat->sendMessage($this->validateRequest('body'), $user->id);
             return $this->getMessages($chat);
-
         }
     }
 
+    /**
+     * Return messages with user object
+     *
+     * @param Chat $chat
+     * @return string
+     */
     public function getMessages(Chat $chat){
         return $chat->messages()->with('user')
             ->get()

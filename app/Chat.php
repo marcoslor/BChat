@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\MessageSent;
 use Illuminate\Database\Eloquent\Model;
 
 class Chat extends Model
@@ -31,6 +32,12 @@ class Chat extends Model
 
     public function addUser($user){
         $this->users()->syncWithoutDetaching(User::find($user));
+    }
+
+    public function sendMessage($body, $user_id){
+        $message = Message::create(['body'=>$body, 'chat_id'=>$this->id, 'user_id'=>$user_id]);
+        broadcast( new MessageSent($message) );
+        return $message;
     }
 
 }

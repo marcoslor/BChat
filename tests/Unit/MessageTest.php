@@ -2,13 +2,17 @@
 
 namespace Tests\Unit;
 
+use App\Chat;
 use App\Events\MessageSent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\WithoutEvents;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class MessageTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A message must belongs to an user
      *
@@ -27,10 +31,15 @@ class MessageTest extends TestCase
      */
     public function event_is_broadcasted_when_message_is_sent()
     {
-        broadcast(new MessageSent($message));
-        $this->assertEventIsBroadcasted(
-            MessageSent::class,
-            'private-notification.' . $notification->id
-        );
+        Event::fake();
+
+        /** @var Chat $chat */
+        $chat = factory('App\Chat')->create();
+
+        $chat->addUser($user = factory('App\User')->create());
+        $this->actingAs($user);
+        $chat->sendMessage('hello', $user->id);
+
+        Event::assertDispatched(MessageSent::class);
     }
 }

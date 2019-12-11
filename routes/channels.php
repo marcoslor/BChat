@@ -11,11 +11,10 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
-});
+use App\Chat;
+use Illuminate\Support\Facades\Auth;
 
-Broadcast::channel('chat.{chatId}', function ($chatId) {
-    return Chat::get($chatId)->contains(Auth::user);
+Broadcast::channel('chat.{chat}', function ($user, Chat $chat) {
+    return $chat->users->contains(Auth::user());
 });
 

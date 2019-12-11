@@ -41,6 +41,7 @@ class ChatManagingTests extends TestCase
      * @test
      */
     public function a_user_can_send_another_user_a_message(){
+        $this->withoutExceptionHandling();
         $this->actingAs($user = factory('App\User')->create())
             ->post('/chats', ['title'=>'Chat da empresa', 'users'=>[$user2 = factory('App\User')->create()]]);
 
