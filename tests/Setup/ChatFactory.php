@@ -1,10 +1,20 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Setup;
 
+use App\Chat;
 use App\Task;
-use Tests\Setup\ProjectFactory;
 
 class ChatFactory {
 
+    /**
+     * @return Chat
+     */
+    public function create(){
+        /** @var Chat $chat */
+        $chat = factory('App\Chat')->create();
+        $chat->addUser(factory('App\Chat')->create());
+        $chat->addUser(factory('App\Chat')->create());
+        return $chat;
+    }
 }

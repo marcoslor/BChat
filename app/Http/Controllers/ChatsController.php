@@ -19,7 +19,12 @@ class ChatsController extends Controller
         ]);
     }
 
-    public function index(Chat $chat)
+    public function index()
+    {
+        return view('chats')->with('chats', Auth::user()->chats);
+    }
+
+    public function get(Chat $chat)
     {
         return view('chat')->with('chat', $chat);
     }

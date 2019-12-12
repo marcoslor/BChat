@@ -40,4 +40,11 @@ class Chat extends Model
         return $message;
     }
 
+    public function tasks(){
+        return $this->hasMany(Task::class);
+    }
+
+    public function addTasks(){
+        return $this->tasks()->create(compact('body'));
+    }
 }

@@ -12,18 +12,16 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/chats');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::post('/chats', 'ChatsController@store')->middleware('auth');
-Route::get('/chats/create', 'ChatsController@create')->middleware('auth');
-Route::get('chats/{chat}', 'ChatsController@index')->middleware('auth');
-
 Route::post('chats/{chat}/messages', 'MessagesController@store')->middleware('auth');
 Route::get('chats/{chat}/messages', 'MessagesController@getMessages')->middleware('auth');
 
-//Route::resource('chats', 'ChatsController')->middleware('auth');
+Route::resource('chats', 'ChatsController')->middleware('auth');
+
+Route::prefix('chats')->group(function () {
+    Route::resource('tasks', 'TaskController')->except(['create'])->middleware('auth');
+});

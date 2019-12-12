@@ -48,4 +48,6 @@ class ChatManagingTests extends TestCase
         $this->post($user->chats->first()->url().'/messages', ['body'=>'hello']);
         $this->assertEquals('hello', $user2->chats->first()->messages->first()->body);
     }
+
+
 }
