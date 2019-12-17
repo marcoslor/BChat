@@ -24,7 +24,7 @@ class ChatsController extends Controller
         return view('chats')->with('chats', Auth::user()->chats);
     }
 
-    public function get(Chat $chat)
+    public function show(Chat $chat)
     {
         return view('chat')->with('chat', $chat);
     }
