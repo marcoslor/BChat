@@ -49,5 +49,4 @@ class ChatManagingTests extends TestCase
         $this->assertEquals('hello', $user2->chats->first()->messages->first()->body);
     }
 
-
 }

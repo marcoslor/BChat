@@ -12,7 +12,7 @@ class Task extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'chat_id',
+        'body'
     ];
 
     public function chat(){

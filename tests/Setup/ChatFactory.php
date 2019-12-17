@@ -8,13 +8,17 @@ use App\Task;
 class ChatFactory {
 
     /**
+     * @param int $count
      * @return Chat
      */
-    public function create(){
+    public function create($count = 2){
         /** @var Chat $chat */
-        $chat = factory('App\Chat')->create();
-        $chat->addUser(factory('App\Chat')->create());
-        $chat->addUser(factory('App\Chat')->create());
+
+        for($i=0; $i<$count; $i++){
+            $chat = factory('App\Chat')->create();
+            $chat->addUser(factory('App\User')->create());
+        }
+
         return $chat;
     }
 }

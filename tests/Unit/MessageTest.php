@@ -13,6 +13,7 @@ use Tests\TestCase;
 class MessageTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A message must belongs to an user
      *
@@ -38,7 +39,7 @@ class MessageTest extends TestCase
 
         $chat->addUser($user = factory('App\User')->create());
         $this->actingAs($user);
-        $chat->sendMessage('hello', $user->id);
+        $chat->addMessage('hello', $user->id);
 
         Event::assertDispatched(MessageSent::class);
     }

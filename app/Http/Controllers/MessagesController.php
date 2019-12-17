@@ -29,7 +29,7 @@ class MessagesController extends Controller
 
         if ($chat->users->contains($user))
         {
-            $chat->sendMessage($this->validateRequest('body'), $user->id);
+            $chat->addMessage($this->validateRequest('body'), $user->id);
             return $this->getMessages($chat);
         }
     }

@@ -22,6 +22,6 @@ Route::get('chats/{chat}/messages', 'MessagesController@getMessages')->middlewar
 
 Route::resource('chats', 'ChatsController')->middleware('auth');
 
-Route::prefix('chats')->group(function () {
+Route::prefix('chats/{chat}')->group(function () {
     Route::resource('tasks', 'TaskController')->except(['create'])->middleware('auth');
 });
