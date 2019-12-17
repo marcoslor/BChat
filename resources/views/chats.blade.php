@@ -8,12 +8,25 @@
                 @foreach($chats as $chat)
                     <li class="">
                         <a href="{{ $chat->url() }}">
-                            <span class="">{{ $chat->title }}</span>
-                            <br>
+                            @if (isset($chat->title))
+                                <span class="">{{ $chat->title }}</span>
+                                <br>
+                            @else
+                                <span class="">Chat com {{$chat->users->count()}}</span>
+                            @endif
                         </a>
-                        <span class="small">
-                            {{ $chat->description }}
-                        </span>
+                        <br>
+                        @if (isset($chat->description))
+                            <span class="small">
+                                {{ $chat->description }}
+                            </span>
+                        @else
+                            <span class="small">
+                                @foreach ($chat->users as $user)
+                                    {{$user->name}},
+                                @endforeach
+                            </span>
+                        @endif
                     </li>
                 @endforeach
             </ul>
