@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Chat;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Gate;
 use Tests\TestCase;
 use Facades\Tests\Setup\ChatFactory;
 
@@ -27,13 +28,17 @@ class ChatTasksTests extends TestCase
      * @test
      */
     public function only_a_participant_can_create_a_task_in_a_chat(){
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
 
         /** @var Chat $chat */
         $chat = ChatFactory::create();
 
-        $this->actingAs($user = factory('App\User')->create())
+        $user = factory('App\User')->create();
+
+        $this->assertNotContains($user, $chat->users);
+
+        $this->actingAs($user)
             ->post($chat->url().'/tasks', ['body' => 'A task'])
-            ->assertUnauthorized();
+            ->assertForbidden();
     }
 }
