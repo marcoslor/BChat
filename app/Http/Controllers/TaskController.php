@@ -40,7 +40,7 @@ class TaskController extends Controller
     {
         request()->validate(['body'=>'required']);
 
-        if(Gate::allows('participate', $chat)){
+        if($this->authorize('participate-in-chat', $chat)){
             $chat->addTask(request('body'));
         }
     }

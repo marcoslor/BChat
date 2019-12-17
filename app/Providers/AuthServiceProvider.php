@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Chat;
+use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -28,10 +29,11 @@ class AuthServiceProvider extends ServiceProvider
 
 
         Gate::define('participate-in-chat', function (User $user, Chat $chat) {
-            return $chat->users->contains($chat);
+            //return $chat->users->contains($user);
+            return false;
         });
 
         //Gate::define('update-post', 'App\Policies\PostPolicy@update');
-        //
+
     }
 }
