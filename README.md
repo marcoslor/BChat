@@ -1,6 +1,9 @@
-BChat: Business chat application.
--
-Install instructions:
+# BChat: A business chat application.
+
+This app was made for my Information Systems course on Instituto Federal da Bahia, lectured by professor Ciro, on my senior year.
+The given task was to implement and develop any REST based system, with SELECT, DELETE, UPDATE and INSERT queries on a SQL server, and develop the respective use cases diagram and its software requirements documentation. 
+
+## Install instructions:
 
 Duplicate `.env.example` file as `.env`;\
 Match `APP_URL` to your app host URL;\
